@@ -1,4 +1,4 @@
-FROM tsl0922/ttyd:latest
+FROM tsl0922/ttyd:1.8.0
 
 # 1. Basis-Tools + Locales
 RUN apt-get update && \
