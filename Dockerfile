@@ -10,7 +10,7 @@ ENV LANG=de_DE.UTF-8 \
     LC_ALL=de_DE.UTF-8
 
 # 2. GitHub Copilot CLI installieren (offizielles Install-Script)
-RUN curl -fsSL https://gh.io/copilot-install | bash
+RUN curl -fsSL https://gh.io/copilot-install -o /tmp/copilot-install.sh && bash /tmp/copilot-install.sh
 
 # 3. Arbeitsverzeichnis
 WORKDIR /workspace
@@ -20,4 +20,4 @@ RUN mkdir -p /workspace
 EXPOSE 8833
 
 # 5. ttyd starten: lauscht auf Port 8833 und startet eine Bash
-CMD ["ttyd", "-p", "8833", "bash"]
+CMD ["ttyd", "-W", "-p", "8833", "bash"]
