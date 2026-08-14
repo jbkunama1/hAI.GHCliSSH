@@ -140,6 +140,8 @@ inside `/workspace`.
 - For classroom or local test setups a LAN-only binding plus firewall rules
   is usually sufficient.
 
+- **Persistence of authentication**: To retain Copilot credentials across container restarts, consider mounting a volume for the Copilot config directory (e.g., `-v copilot-config:/root/.copilot`). Note that without a system keychain, credentials may be stored in plaintext.
+
 ---
 
 ## License
