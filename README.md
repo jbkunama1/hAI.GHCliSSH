@@ -25,7 +25,7 @@ but without needing a separate SSH server.
 | Layer | Description |
 |-------|-------------|
 | Base image | `tsl0922/ttyd:latest` — ships `ttyd` and all terminal-over-HTTP plumbing |
-| Copilot CLI | Installed via GitHub's official script: `curl -fsSL https://gh.io/copilot-install \| bash` |
+| Copilot CLI | Installed via GitHub's official script: `curl -fsSL https://gh.io/copilot-install | bash` |
 | ttyd listener | Port `8833` inside the container, mapped to the host |
 | Workspace | `/workspace` — working directory inside the container |
 
@@ -38,7 +38,6 @@ but without needing a separate SSH server.
 - [Browser Access](#browser-access)
 - [Using Copilot CLI](#using-copilot-cli)
 - [Security & Networking](#security--networking)
-- [Alternatives with Real SSH](#alternatives-with-real-ssh)
 - [License](#license)
 
 ---
