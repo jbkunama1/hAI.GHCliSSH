@@ -12,7 +12,13 @@ services:
       - "8833:8833"
     volumes:
       - copilot-config:/home/copilot/.copilot
+    networks:
+      - highfishNetwork
     restart: unless-stopped
 
 volumes:
   copilot-config:
+
+networks:
+  highfishNetwork:
+    external: true

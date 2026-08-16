@@ -160,7 +160,7 @@ Du kannst den Stack direkt aus dem Git‑Repository deployen. Beim Erstellen mus
 | `TTYD_USER` (optional) | Benutzername für Basic‑Auth (default `admin`) | `admin` |
 | `TTYD_PASSWORD` (optional) | Passwort für Basic‑Auth – leer lässt das Login weg | `geheim123` |
 
-Der Stack startet den Service auf Port **8833** und bindet das Volume `copilot-config` für die persistente Copilot‑Konfiguration. Nach dem ersten Start musst du im Web‑Terminal (`http://<host>:8833`) `copilot login` ausführen – danach bleibt das Token im Volume gespeichert.
+Der Stack startet den Service auf Port **8833**, bindet das Volume `copilot-config` für die persistente Copilot‑Konfiguration und verbindet den Container mit dem externen Docker-Netzwerk **`highfishNetwork`** (muss in Portainer/Docker bereits angelegt sein). Nach dem ersten Start musst du im Web‑Terminal (`http://<host>:8833`) `copilot login` ausführen – danach bleibt das Token im Volume gespeichert.
 
 ---
 
