@@ -1,5 +1,5 @@
 # Builder stage for Copilot CLI installation
-FROM tsl0922/ttyd:1.8.0 AS builder
+FROM tsl0922/ttyd:1.7.8 AS builder
 
 # 1. Basis-Tools + Locales
 RUN apt-get update && \
@@ -14,7 +14,7 @@ ENV LANG=de_DE.UTF-8 \
 RUN curl -fsSL https://gh.io/copilot-install -o /tmp/copilot-install.sh && bash /tmp/copilot-install.sh
 
 # Runtime stage
-FROM tsl0922/ttyd:1.8.0
+FROM tsl0922/ttyd:1.7.8
 
 # Copy Copilot CLI binary from builder stage
 COPY --from=builder /usr/local/bin/copilot /usr/local/bin/copilot
