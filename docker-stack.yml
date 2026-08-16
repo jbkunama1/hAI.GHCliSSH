@@ -1,0 +1,12 @@
+services:
+  copilot-terminal:
+    image: ghcr.io/jbkunama1/hai.ghclissh:main
+    container_name: hAI.GHCliSSH
+    ports:
+      - "8833:8833"
+    volumes:
+      - copilot-config:/home/copilot/.copilot
+    restart: unless-stopped
+
+volumes:
+  copilot-config:
