@@ -23,14 +23,18 @@ COPY --from=builder /usr/local/bin/copilot /usr/local/bin/copilot
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates locales && \
     locale-gen de_DE.UTF-8 && \
+    useradd --create-home --home-dir /home/copilot --shell /bin/bash copilot && \
+    mkdir -p /workspace /home/copilot/.copilot && \
+    chown -R copilot:copilot /workspace /home/copilot && \
     rm -rf /var/lib/apt/lists/*
 
-ENV LANG=de_DE.UTF-8 \
+ENV HOME=/home/copilot \
+    LANG=de_DE.UTF-8 \
     LC_ALL=de_DE.UTF-8
 
-# 3. Arbeitsverzeichnis
+# 3. Arbeitsverzeichnis (as copilot user)
+USER copilot
 WORKDIR /workspace
-RUN mkdir -p /workspace
 
 # 4. Port für ttyd (intern 8833)
 EXPOSE 8833
