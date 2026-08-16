@@ -102,6 +102,8 @@ volumes:
   <p>Deploy the stack directly from the repository. The following environment variables are available (set them in the <strong>Environment variables</strong> field when creating the stack):</p>
   <table>
     <tr><th>Variable</th><th>Purpose</th><th>Example</th></tr>
+    <tr><td><code>MCP_SERVER</code> (optional)</td><td>MCP server for Copilot CLI</td><td><code>AnythingMCP</code></td></tr>
+    <tr><td><code>LLM_PROVIDER_API_KEY</code></td><td>API key of your LLM provider (e.g. 9router)</td><td><code>sk-ABC123&hellip;</code></td></tr>
     <tr><td><code>COPILOT_GITHUB_TOKEN</code></td><td>Fine-grained PAT with <strong>Copilot Requests</strong> scope &mdash; authenticates Copilot CLI automatically</td><td><code>ghp_ABC123&hellip;</code></td></tr>
     <tr><td><code>TTYD_USER</code> (optional)</td><td>Basic-Auth username (default <code>admin</code>)</td><td><code>admin</code></td></tr>
     <tr><td><code>TTYD_PASSWORD</code> (optional)</td><td>Basic-Auth password &mdash; leave empty to disable the login prompt</td><td><code>geheim123</code></td></tr>
