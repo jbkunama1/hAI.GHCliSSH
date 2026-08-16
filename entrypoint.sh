@@ -6,6 +6,11 @@ set -e
 : "${COPILOT_GITHUB_TOKEN:=${GITHUB_TOKEN:-}}"
 export COPILOT_GITHUB_TOKEN
 
+# MCP server + LLM provider settings (injected into the runtime shell for Copilot CLI)
+MCP_SERVER="${MCP_SERVER:-AnythingMCP}"
+LLM_PROVIDER_API_KEY="${LLM_PROVIDER_API_KEY:-}"
+export MCP_SERVER LLM_PROVIDER_API_KEY
+
 # ttyd basic auth (empty password disables auth; empty user -> default "admin")
 TTYD_USER="${TTYD_USER:-admin}"
 TTYD_PASSWORD="${TTYD_PASSWORD:-}"
