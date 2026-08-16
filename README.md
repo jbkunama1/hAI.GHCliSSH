@@ -10,9 +10,6 @@ No separate SSH server needed, no local install required.
 
 ![Space Shooter](game.gif)
 
-> The [`github-space-shooter`](.github/workflows/space-shooter.yml) workflow
-> regenerates this GIF weekly (Mon 09:00) and on manual dispatch.
-
 ---
 
 ## Overview
@@ -155,25 +152,15 @@ configuration between container restarts.
 
 ## Deploy to Portainer
 
-You can deploy the stack directly from the Git repository:
+Du kannst den Stack direkt aus dem Git‑Repository deployen. Beim Erstellen musst du folgende Umgebungsvariablen angeben (im UI von Portainer im **Environment‑Variables**‑Feld):
 
-1. In Portainer open **Stacks** → **Add stack**.
-2. Choose the **Repository** tab.
-3. Enter the repository URL:
-   ```
-   https://github.com/jbkunama1/hAI.GHCliSSH.git
-   ```
-4. Set the **Compose path** to:
-   ```
-   docker-compose.yml
-   ```
-5. Select the branch you want to deploy from (`main`).
-6. Click **Deploy the stack** and wait for the image to be pulled.
+| Variable | Zweck | Beispielwert |
+|----------|-------|--------------|
+| `COPILOT_GITHUB_TOKEN` | Fein‑granularer PAT mit **Copilot Requests**‑Scope – authentifiziert Copilot CLI automatisch | `ghp_ABC123…` |
+| `TTYD_USER` (optional) | Benutzername für Basic‑Auth (default `admin`) | `admin` |
+| `TTYD_PASSWORD` (optional) | Passwort für Basic‑Auth – leer lässt das Login weg | `geheim123` |
 
-> **Private package:** If the GHCR package is private, add a registry
-> credential in Portainer first. Create a PAT with the `read:packages` scope,
-> add it under **Registries** (GitHub Container Registry, user `jbkunama1`),
-> and select it in the stack's registry dropdown before deploying.
+Der Stack startet den Service auf Port **8833**, bindet das Volume `copilot-config` für die persistente Copilot‑Konfiguration und verbindet den Container mit dem externen Docker-Netzwerk **`highfishNetwork`** (muss in Portainer/Docker bereits angelegt sein). Nach dem ersten Start musst du im Web‑Terminal (`http://<host>:8833`) `copilot login` ausführen – danach bleibt das Token im Volume gespeichert.
 
 ---
 

@@ -39,7 +39,6 @@
   </div>
 
   <img alt="Space Shooter" src="game.gif" style="max-width:100%; border-radius:6px; margin:0.5rem 0;">
-  <p>The <a href=".github/workflows/space-shooter.yml"><code>github-space-shooter</code></a> workflow regenerates this GIF weekly (Mon 09:00) and on manual dispatch.</p>
 
   <h2>Overview</h2>
   <p>This project provides a single Docker container that publishes a browser-based terminal (via <code>ttyd</code>) and has GitHub Copilot CLI pre-installed. Start the container, open <code>http://&lt;host&gt;:8833</code> in a browser and work directly with <code>copilot</code> and other commands &mdash; just like an SSH session, but without a separate SSH server.</p>
@@ -100,6 +99,14 @@ volumes:
     <li>Select the branch to deploy from (<code>main</code>).</li>
     <li>Click <strong>Deploy the stack</strong> and wait for the image to be pulled.</li>
   </ol>
+  <p>Deploy the stack directly from the repository. The following environment variables are available (set them in the <strong>Environment variables</strong> field when creating the stack):</p>
+  <table>
+    <tr><th>Variable</th><th>Purpose</th><th>Example</th></tr>
+    <tr><td><code>COPILOT_GITHUB_TOKEN</code></td><td>Fine-grained PAT with <strong>Copilot Requests</strong> scope &mdash; authenticates Copilot CLI automatically</td><td><code>ghp_ABC123&hellip;</code></td></tr>
+    <tr><td><code>TTYD_USER</code> (optional)</td><td>Basic-Auth username (default <code>admin</code>)</td><td><code>admin</code></td></tr>
+    <tr><td><code>TTYD_PASSWORD</code> (optional)</td><td>Basic-Auth password &mdash; leave empty to disable the login prompt</td><td><code>geheim123</code></td></tr>
+  </table>
+  <p>The stack serves on port <code>8833</code>, mounts the <code>copilot-config</code> volume for persistent Copilot configuration and attaches the container to the external Docker network <code>highfishNetwork</code> (must already exist in Portainer/Docker). After the first start, run <code>copilot login</code> once in the web terminal &mdash; the token stays in the volume.</p>
   <blockquote><strong>Private package:</strong> If the GHCR package is private, add a registry credential in Portainer first. Create a PAT with the <code>read:packages</code> scope, add it under Registries (GitHub Container Registry, user <code>jbkunama1</code>), and select it in the stack's registry dropdown before deploying.</blockquote>
 
   <h2>Browser Access</h2>
