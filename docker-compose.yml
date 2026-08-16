@@ -2,6 +2,12 @@ services:
   copilot-terminal:
     image: ghcr.io/jbkunama1/hai.ghclissh:main
     container_name: hAI.GHCliSSH
+    environment:
+      # Copilot CLI reads COPILOT_GITHUB_TOKEN automatically (fine-grained PAT with "Copilot Requests" scope)
+      COPILOT_GITHUB_TOKEN: ${COPILOT_GITHUB_TOKEN:-}
+      # ttyd Basic-Auth: leave TTYD_PASSWORD empty to disable login prompt
+      TTYD_USER: ${TTYD_USER:-admin}
+      TTYD_PASSWORD: ${TTYD_PASSWORD:-}
     ports:
       - "8833:8833"
     volumes:

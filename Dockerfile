@@ -39,5 +39,9 @@ WORKDIR /workspace
 # 4. Port für ttyd (intern 8833)
 EXPOSE 8833
 
-# 5. ttyd starten: lauscht auf Port 8833 und startet eine Bash
-CMD ["ttyd", "-W", "-p", "8833", "bash"]
+# 6. ttyd starten: lauscht auf Port 8833 und startet eine Bash
+ENTRYPOINT ["/home/copilot/entrypoint.sh"]
+
+# 7. Entrypoint reicht Copilot-Token weiter + setzt ttyd Basic-Auth
+COPY --chown=copilot:copilot entrypoint.sh /home/copilot/entrypoint.sh
+RUN chmod +x /home/copilot/entrypoint.sh
