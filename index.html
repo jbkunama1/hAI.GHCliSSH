@@ -62,6 +62,43 @@ docker build -t copilot-ttyd .</pre>
   copilot-ttyd</pre>
   <blockquote><strong>Tip:</strong> To persist your work, add <code>-v copilot-workspace:/workspace</code>. To retain Copilot credentials, add <code>-v copilot-config:/home/copilot/.copilot</code>.</blockquote>
 
+  <h2>Pre-built GHCR image</h2>
+  <p>A pre-built image is published to GitHub Container Registry for every push to <code>main</code>:</p>
+  <pre>ghcr.io/jbkunama1/hai.ghclissh:main</pre>
+  <blockquote><strong>Note:</strong> The package is currently <strong>private</strong>. To pull it you must either make the package public on GitHub or authenticate your container runtime (see Deploy to Portainer).</blockquote>
+  <pre>docker pull ghcr.io/jbkunama1/hai.ghclissh:main</pre>
+  <p>For a private package, log in first:</p>
+  <pre>echo $GITHUB_TOKEN | docker login ghcr.io -u jbkunama1 --password-stdin</pre>
+  <p>where <code>GITHUB_TOKEN</code> is a PAT with the <code>read:packages</code> scope.</p>
+
+  <h2>Docker Compose</h2>
+  <p>The standard deployment uses <a href="docker-compose.yml">docker-compose.yml</a>, which references the GHCR image:</p>
+  <pre>services:
+  copilot-terminal:
+    image: ghcr.io/jbkunama1/hai.ghclissh:main
+    container_name: hAI.GHCliSSH
+    ports:
+      - "8833:8833"
+    volumes:
+      - copilot-config:/home/copilot/.copilot
+    restart: unless-stopped
+
+volumes:
+  copilot-config:</pre>
+  <pre>docker compose up -d</pre>
+  <p>The <code>copilot-config</code> volume persists your Copilot authentication and configuration between restarts.</p>
+
+  <h2>Deploy to Portainer</h2>
+  <ol>
+    <li>In Portainer open <strong>Stacks</strong> &rarr; <strong>Add stack</strong>.</li>
+    <li>Choose the <strong>Repository</strong> tab.</li>
+    <li>Enter the repository URL: <code>https://github.com/jbkunama1/hAI.GHCliSSH.git</code></li>
+    <li>Set the <strong>Compose path</strong> to <code>docker-compose.yml</code>.</li>
+    <li>Select the branch to deploy from (<code>main</code>).</li>
+    <li>Click <strong>Deploy the stack</strong> and wait for the image to be pulled.</li>
+  </ol>
+  <blockquote><strong>Private package:</strong> If the GHCR package is private, add a registry credential in Portainer first. Create a PAT with the <code>read:packages</code> scope, add it under Registries (GitHub Container Registry, user <code>jbkunama1</code>), and select it in the stack's registry dropdown before deploying.</blockquote>
+
   <h2>Browser Access</h2>
   <p>Open <code>http://localhost:8833</code> (or <code>http://&lt;host-ip&gt;:8833</code> from another machine) to get a full TTY served over HTTP by <code>ttyd</code>.</p>
 

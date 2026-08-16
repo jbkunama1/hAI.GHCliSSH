@@ -35,6 +35,8 @@ but without needing a separate SSH server.
 
 - [Install](#install)
 - [Run](#run)
+- [Docker Compose](#docker-compose)
+- [Deploy to Portainer](#deploy-to-portainer)
 - [Browser Access](#browser-access)
 - [Using Copilot CLI](#using-copilot-cli)
 - [Security & Networking](#security--networking)
@@ -82,6 +84,91 @@ docker run --rm -it \
 
 > **Tip:** To persist your work, add `-v copilot-workspace:/workspace` to keep
 > files between container restarts.
+
+---
+
+## Pre-built GHCR image
+
+A pre-built image is published to GitHub Container Registry for every push to
+`main` (via the `docker-publish.yml` workflow):
+
+```
+ghcr.io/jbkunama1/hai.ghclissh:main
+```
+
+> **Note:** The package is currently **private**. To pull it you must either
+> make the package public on GitHub (Packages → *Package settings* →
+> *Change visibility*) or authenticate your container runtime (see
+> [Deploy to Portainer](#deploy-to-portainer)).
+
+### Pull the image
+
+```bash
+docker pull ghcr.io/jbkunama1/hai.ghclissh:main
+```
+
+> For a private package, log in first:
+>
+> ```bash
+> echo $GITHUB_TOKEN | docker login ghcr.io -u jbkunama1 --password-stdin
+> ```
+>
+> where `GITHUB_TOKEN` is a PAT with the `read:packages` scope.
+
+---
+
+## Docker Compose
+
+The standard deployment uses [`docker-compose.yml`](docker-compose.yml) from
+this repository, which references the GHCR image:
+
+```yaml
+services:
+  copilot-terminal:
+    image: ghcr.io/jbkunama1/hai.ghclissh:main
+    container_name: hAI.GHCliSSH
+    ports:
+      - "8833:8833"
+    volumes:
+      - copilot-config:/home/copilot/.copilot
+    restart: unless-stopped
+
+volumes:
+  copilot-config:
+```
+
+Run it:
+
+```bash
+docker compose up -d
+```
+
+The `copilot-config` volume persists your Copilot authentication and
+configuration between container restarts.
+
+---
+
+## Deploy to Portainer
+
+You can deploy the stack directly from the Git repository:
+
+1. In Portainer open **Stacks** → **Add stack**.
+2. Choose the **Repository** tab.
+3. Enter the repository URL:
+   ```
+   https://github.com/jbkunama1/hAI.GHCliSSH.git
+   ```
+4. Set the **Compose path** to:
+   ```
+   docker-compose.yml
+   ```
+5. Select the branch you want to deploy from (`main`).
+6. Click **Deploy the stack** and wait for the image to be pulled.
+
+> **Private package:** If the GHCR package is private, add a registry
+> credential in Portainer first. Create a PAT with the `read:packages` scope,
+> add it under **Registries** (GitHub Container Registry, user `jbkunama1`),
+> and select it in the stack's registry dropdown before deploying.
 
 ---
 
