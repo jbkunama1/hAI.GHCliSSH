@@ -8,6 +8,11 @@ No separate SSH server needed, no local install required.
 [![Copilot CLI](https://img.shields.io/badge/Copilot%20CLI-1.x-2366d1?logo=githubcopilot)](https://github.com/features/copilot)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+![Space Shooter](game.gif)
+
+> The [`github-space-shooter`](.github/workflows/space-shooter.yml) workflow
+> regenerates this GIF weekly (Mon 09:00) and on manual dispatch.
+
 ---
 
 ## Overview
