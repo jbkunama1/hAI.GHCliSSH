@@ -21,7 +21,7 @@ COPY --from=builder /usr/local/bin/copilot /usr/local/bin/copilot
 
 # 1. Basis-Tools + Locales (minimal, only what ttyd needs)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates locales && \
+    apt-get install -y --no-install-recommends ca-certificates joe locales && \
     locale-gen de_DE.UTF-8 && \
     useradd --create-home --home-dir /home/copilot --shell /bin/bash copilot && \
     mkdir -p /workspace /home/copilot/.copilot && \

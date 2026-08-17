@@ -103,7 +103,6 @@ volumes:
   <table>
     <tr><th>Variable</th><th>Purpose</th><th>Example</th></tr>
     <tr><td><code>MCP_SERVER</code> (optional)</td><td>MCP server for Copilot CLI</td><td><code>AnythingMCP</code></td></tr>
-<<<<<<< HEAD
         <tr><td><code>MCP_SERVER_API_KEY</code> (optional)</td><td>API key for the MCP server</td><td><code>mscp_ABC123&hellip;</code></td></tr>
         <tr><td><code>OPENAI_API_KEY</code> (optional, BYOK)</td><td>API key of your LLM provider (e.g. 9router) &mdash; passed to Copilot CLI as <code>COPILOT_PROVIDER_API_KEY</code></td><td><code>sk-ABC123&hellip;</code></td></tr>
         <tr><td><code>OPENAI_URL</code> (optional, BYOK)</td><td>Base URL of your own OpenAI-compatible LLM server &mdash; passed to Copilot CLI as <code>COPILOT_PROVIDER_BASE_URL</code></td><td><code>https://llm.example.com/v1</code></td></tr>
@@ -111,23 +110,25 @@ volumes:
         <tr><td><code>COPILOT_GITHUB_TOKEN</code></td><td>Fine-grained PAT with <strong>Copilot Requests</strong> scope &mdash; authenticates Copilot CLI automatically</td><td><code>ghp_ABC123&hellip;</code></td></tr>
         <tr><td><code>TTYD_USER</code> (optional)</td><td>Basic-Auth username (default <code>admin</code>)</td><td><code>admin</code></td></tr>
         <tr><td><code>TTYD_PASSWORD</code> (optional)</td><td>Basic-Auth password &mdash; leave empty to disable the login prompt</td><td><code>geheim123</code></td></tr>
+        <tr><td><code>TTYD_CMD</code> (optional)</td><td>Command the web terminal starts (default <code>bash</code> &mdash; see Shell selection below)</td><td><code>bash</code></td></tr>
       </table>
       <blockquote><strong>Note:</strong> <code>LLM_PROVIDER_API_KEY</code> remains as a deprecated alias of <code>OPENAI_API_KEY</code> (read-only, for existing setups).</blockquote>
       <p>The stack serves on port <code>8833</code>, mounts the <code>copilot-config</code> volume for persistent Copilot configuration and attaches the container to the external Docker network <code>highfishNetwork</code> (must already exist in Portainer/Docker). Authentication is fully handled by the environment variables (<code>COPILOT_GITHUB_TOKEN</code> or the BYOK provider variables) &mdash; no manual <code>copilot login</code> in the web terminal is needed.</p>
-=======
-    <tr><td><code>LLM_PROVIDER_API_KEY</code></td><td>API key of your LLM provider (e.g. 9router)</td><td><code>sk-ABC123&hellip;</code></td></tr>
-    <tr><td><code>COPILOT_GITHUB_TOKEN</code></td><td>Fine-grained PAT with <strong>Copilot Requests</strong> scope &mdash; authenticates Copilot CLI automatically</td><td><code>ghp_ABC123&hellip;</code></td></tr>
-    <tr><td><code>TTYD_USER</code> (optional)</td><td>Basic-Auth username (default <code>admin</code>)</td><td><code>admin</code></td></tr>
-    <tr><td><code>TTYD_PASSWORD</code> (optional)</td><td>Basic-Auth password &mdash; leave empty to disable the login prompt</td><td><code>geheim123</code></td></tr>
-  </table>
-  <p>The stack serves on port <code>8833</code>, mounts the <code>copilot-config</code> volume for persistent Copilot configuration and attaches the container to the external Docker network <code>highfishNetwork</code> (must already exist in Portainer/Docker). After the first start, run <code>copilot login</code> once in the web terminal &mdash; the token stays in the volume.</p>
->>>>>>> origin/main
-  <blockquote><strong>Private package:</strong> If the GHCR package is private, add a registry credential in Portainer first. Create a PAT with the <code>read:packages</code> scope, add it under Registries (GitHub Container Registry, user <code>jbkunama1</code>), and select it in the stack's registry dropdown before deploying.</blockquote>
+      <blockquote><strong>Private package:</strong> If the GHCR package is private, add a registry credential in Portainer first. Create a PAT with the <code>read:packages</code> scope, add it under Registries (GitHub Container Registry, user <code>jbkunama1</code>), and select it in the stack's registry dropdown before deploying.</blockquote>
 
   <h2>🌐 Browser Access</h2>
   <p>Open <code>http://localhost:8833</code> (or <code>http://&lt;host-ip&gt;:8833</code> from another machine) to get a full TTY served over HTTP by <code>ttyd</code>.</p>
+    <p>The shell selection depends on what is installed in the image:</p>
+    <table>
+      <tr><th><code>TTYD_CMD</code></th><th>Shell</th></tr>
+      <tr><td><code>bash</code> (Default)</td><td>Bash, recommended</td></tr>
+      <tr><td><code>sh</code> / <code>dash</code></td><td>POSIX shell (lighter)</td></tr>
+    </table>
+    <blockquote>There is nothing else out&nbsp;of&nbsp;the&nbsp;box &mdash; <code>zsh</code>, <code>fish</code>, <code>ash</code> etc. would need to be installed in the <code>Dockerfile</code> first (one line in the <code>apt-get install</code> line).</blockquote>
+    <blockquote>Tip: <code>TTYD_CMD=copilot</code> also works &mdash; the terminal then starts Copilot CLI directly instead of a shell (if you want a "Copilot-only" access).</blockquote>
+    <blockquote>The <code>joe</code> editor is already installed in the image and immediately available.</blockquote>
 
-  <h2>🤖 Using Copilot CLI</h2>
+    <h2>🤖 Using Copilot CLI</h2>
   <pre>copilot
 copilot -p "create a bash script that cleans up my git repo"</pre>
   <p>On first launch Copilot CLI asks whether you trust the current directory and prompts you to authenticate via the GitHub login flow.</p>
