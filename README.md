@@ -1,4 +1,4 @@
-# hAI.GHCliSSH
+# 🚀 hAI.GHCliSSH
 
 GitHub Copilot CLI in a browser-based terminal (`ttyd`) — one `docker run` away.
 No separate SSH server needed, no local install required.
@@ -12,7 +12,7 @@ No separate SSH server needed, no local install required.
 
 ---
 
-## Overview
+## 📖 Overview
 
 This project provides a single Docker container that publishes a browser-based
 terminal (via [`ttyd`](https://github.com/tsl0922/ttyd)) and has
@@ -22,7 +22,7 @@ You start the container, open `http://<host>:8833` in a browser and can then
 work directly with `copilot` and other commands — just like an SSH session,
 but without needing a separate SSH server.
 
-### Architecture
+### 🏗️ Architecture
 
 | Layer | Description |
 |-------|-------------|
@@ -33,7 +33,7 @@ but without needing a separate SSH server.
 
 ---
 
-## Table of Contents
+## 📚 Table of Contents
 
 - [Install](#install)
 - [Run](#run)
@@ -46,7 +46,7 @@ but without needing a separate SSH server.
 
 ---
 
-## Install
+## 🛠️ Install
 
 ### 1. Clone the repository
 
@@ -69,7 +69,7 @@ GitHub Copilot CLI.
 
 ---
 
-## Run
+## 🚀 Run
 
 ```bash
 docker run --rm -it \
@@ -89,7 +89,7 @@ docker run --rm -it \
 
 ---
 
-## Pre-built GHCR image
+## 📦 Pre-built GHCR image
 
 A pre-built image is published to GitHub Container Registry for every push to
 `main` (via the `docker-publish.yml` workflow):
@@ -103,7 +103,7 @@ ghcr.io/jbkunama1/hai.ghclissh:main
 > *Change visibility*) or authenticate your container runtime (see
 > [Deploy to Portainer](#deploy-to-portainer)).
 
-### Pull the image
+### 📥 Pull the image
 
 ```bash
 docker pull ghcr.io/jbkunama1/hai.ghclissh:main
@@ -119,7 +119,7 @@ docker pull ghcr.io/jbkunama1/hai.ghclissh:main
 
 ---
 
-## Docker Compose
+## 🐳 Docker Compose
 
 The standard deployment uses [`docker-compose.yml`](docker-compose.yml) from
 this repository, which references the GHCR image:
@@ -150,7 +150,7 @@ configuration between container restarts.
 
 ---
 
-## Deploy to Portainer
+## ⚓ Deploy to Portainer
 
 Du kannst den Stack direkt aus dem Git‑Repository deployen. Beim Erstellen musst du folgende Umgebungsvariablen angeben (im UI von Portainer im **Environment‑Variables**‑Feld):
 
@@ -166,7 +166,7 @@ Der Stack startet den Service auf Port **8833**, bindet das Volume `copilot-conf
 
 ---
 
-## Browser Access
+## 🌐 Browser Access
 
 Open in your browser:
 
@@ -184,7 +184,7 @@ You see a full TTY running inside the container, served over HTTP by `ttyd`.
 
 ---
 
-## Using Copilot CLI
+## 🤖 Using Copilot CLI
 
 Inside the browser terminal, simply run:
 
@@ -213,7 +213,7 @@ inside `/workspace`.
 
 ---
 
-## Security & Networking
+## 🛡️ Security & Networking
 
 - **Do not expose port `8833` to the public internet** without additional
   authentication. A reverse proxy with Basic Auth, OAuth or a VPN is
@@ -225,6 +225,6 @@ inside `/workspace`.
 
 ---
 
-## License
+## 📄 License
 
 MIT
