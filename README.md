@@ -161,6 +161,8 @@ Du kannst den Stack direkt aus dem Git‑Repository deployen. Beim Erstellen mus
 | `OPENAI_API_KEY` (optional, BYOK) | API‑Key deines LLM‑Providers (z. B. 9router) – wird an Copilot CLI als `COPILOT_PROVIDER_API_KEY` weitergereicht | `sk-ABC123…` |
 | `OPENAI_URL` (optional, BYOK) | Base‑URL deines eigenen OpenAI‑kompatiblen LLM‑Servers – wird an Copilot CLI als `COPILOT_PROVIDER_BASE_URL` weitergereicht | `https://llm.example.com/v1` |
 | `COPILOT_MODEL` (optional) | Modell‑Identifikator für den BYOK‑Provider | `gpt-4o-mini` |
+| `LLM_PROVIDER_API_KEY` (veraltet) | API‑Key deines LLM‑Providers (z. B. 9router) – bleibt aus älteren Setups erhalten | `sk-ABC123…` |
+
 | `COPILOT_GITHUB_TOKEN` | Fein‑granularer PAT mit **Copilot Requests**‑Scope – authentifiziert Copilot CLI automatisch | `ghp_ABC123…` |
 | `TTYD_USER` (optional) | Benutzername für Basic‑Auth (default `admin`) | `admin` |
 | `TTYD_PASSWORD` (optional) | Passwort für Basic‑Auth – leer lässt das Login weg | `geheim123` |
