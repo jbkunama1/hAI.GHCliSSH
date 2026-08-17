@@ -157,12 +157,19 @@ Du kannst den Stack direkt aus dem Git‑Repository deployen. Beim Erstellen mus
 | Variable | Zweck | Beispielwert |
 |----------|-------|--------------|
 | `MCP_SERVER` (optional) | MCP‑Server, den Copilot CLI verwenden soll | `AnythingMCP` |
-| `LLM_PROVIDER_API_KEY` | API‑Key deines LLM‑Providers (z. B. 9router) | `sk-ABC123…` |
+| `MCP_SERVER_API_KEY` (optional) | API‑Key für den MCP‑Server | `mscp_ABC123…` |
+| `OPENAI_API_KEY` (optional, BYOK) | API‑Key deines LLM‑Providers (z. B. 9router) – wird an Copilot CLI als `COPILOT_PROVIDER_API_KEY` weitergereicht | `sk-ABC123…` |
+| `OPENAI_URL` (optional, BYOK) | Base‑URL deines eigenen OpenAI‑kompatiblen LLM‑Servers – wird an Copilot CLI als `COPILOT_PROVIDER_BASE_URL` weitergereicht | `https://llm.example.com/v1` |
+| `COPILOT_MODEL` (optional) | Modell‑Identifikator für den BYOK‑Provider | `gpt-4o-mini` |
+| `LLM_PROVIDER_API_KEY` (veraltet) | API‑Key deines LLM‑Providers (z. B. 9router) – bleibt aus älteren Setups erhalten | `sk-ABC123…` |
+
 | `COPILOT_GITHUB_TOKEN` | Fein‑granularer PAT mit **Copilot Requests**‑Scope – authentifiziert Copilot CLI automatisch | `ghp_ABC123…` |
 | `TTYD_USER` (optional) | Benutzername für Basic‑Auth (default `admin`) | `admin` |
 | `TTYD_PASSWORD` (optional) | Passwort für Basic‑Auth – leer lässt das Login weg | `geheim123` |
 
-Der Stack startet den Service auf Port **8833**, bindet das Volume `copilot-config` für die persistente Copilot‑Konfiguration und verbindet den Container mit dem externen Docker-Netzwerk **`highfishNetwork`** (muss in Portainer/Docker bereits angelegt sein). Nach dem ersten Start musst du im Web‑Terminal (`http://<host>:8833`) `copilot login` ausführen – danach bleibt das Token im Volume gespeichert.
+> **Hinweis:** `LLM_PROVIDER_API_KEY` bleibt als veralteter Alias von `OPENAI_API_KEY` erhalten (Read‑only, nur für Bestandssetups).
+
+Der Stack startet den Service auf Port **8833**, bindet das Volume `copilot-config` für die persistente Copilot‑Konfiguration und verbindet den Container mit dem externen Docker-Netzwerk **`highfishNetwork`** (muss in Portainer/Docker bereits angelegt sein). Die Authentifizierung läuft komplett über die Umgebungsvariablen (`COPILOT_GITHUB_TOKEN` bzw. die BYOK‑Provider-Variablen) – ein manuelles `copilot login` im Web‑Terminal ist **nicht** mehr nötig.
 
 ---
 

@@ -3,11 +3,14 @@ services:
     image: ghcr.io/jbkunama1/hai.ghclissh:main
     container_name: hAI.GHCliSSH
     environment:
-      # MCP Server configuration
+# MCP server configuration (name + API key), passed through to the Copilot CLI runtime shell
       MCP_SERVER: ${MCP_SERVER:-AnythingMCP}
-      # LLM Provider API Key
-      LLM_PROVIDER_API_KEY: ${LLM_PROVIDER_API_KEY:-}
-      # Copilot CLI reads COPILOT_GITHUB_TOKEN automatically (fine-grained PAT with "Copilot Requests" scope)
+      MCP_SERVER_API_KEY: ${MCP_SERVER_API_KEY:-}
+      # BYOK: your own OpenAI-compatible LLM server -> mapped to COPILOT_PROVIDER_* in entrypoint.sh
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_URL: ${OPENAI_URL:-}
+      COPILOT_MODEL: ${COPILOT_MODEL:-}
+      # Copilot CLI authenticates automatically via env (fine-grained PAT with "Copilot Requests" scope)
       COPILOT_GITHUB_TOKEN: ${COPILOT_GITHUB_TOKEN:-}
       # ttyd Basic-Auth: leave TTYD_PASSWORD empty to disable login prompt
       TTYD_USER: ${TTYD_USER:-admin}
