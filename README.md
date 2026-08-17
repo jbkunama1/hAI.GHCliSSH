@@ -166,6 +166,7 @@ Du kannst den Stack direkt aus dem Git‑Repository deployen. Beim Erstellen mus
 | `COPILOT_GITHUB_TOKEN` | Fein‑granularer PAT mit **Copilot Requests**‑Scope – authentifiziert Copilot CLI automatisch | `ghp_ABC123…` |
 | `TTYD_USER` (optional) | Benutzername für Basic‑Auth (default `admin`) | `admin` |
 | `TTYD_PASSWORD` (optional) | Passwort für Basic‑Auth – leer lässt das Login weg | `geheim123` |
+| `TTYD_CMD` (optional) | Befehl, den das Web‑Terminal startet (default `bash` – siehe Shell‑Auswahl unten) | `bash` |
 
 > **Hinweis:** `LLM_PROVIDER_API_KEY` bleibt als veralteter Alias von `OPENAI_API_KEY` erhalten (Read‑only, nur für Bestandssetups).
 
@@ -188,6 +189,19 @@ http://<host-ip>:8833
 ```
 
 You see a full TTY running inside the container, served over HTTP by `ttyd`.
+
+Die Auswahl an Shells richtet sich danach, was im Image installiert ist:
+
+| `TTYD_CMD` | Shell |
+| --- | --- |
+| `bash` (Default) | Bash, empfohlen |
+| `sh` / `dash` | POSIX‑Shell (leichtgewichtiger) |
+
+> Mehr gibt's nicht out‑of‑the‑box — `zsh`, `fish`, `ash` etc. müssten erst im `Dockerfile` installiert werden (eine Zeile in der `apt-get install`-Zeile).
+
+> Tipp: **`TTYD_CMD=copilot`** geht auch — dann startet das Terminal direkt Copilot CLI statt einer Shell (falls du einen „nur‑Copilot"-Zugang willst).
+
+> Der Editor **`joe`** ist im Image bereits installiert und sofort verfügbar.
 
 ---
 

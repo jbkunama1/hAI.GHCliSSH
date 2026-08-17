@@ -15,6 +15,8 @@ services:
       # ttyd Basic-Auth: leave TTYD_PASSWORD empty to disable login prompt
       TTYD_USER: ${TTYD_USER:-admin}
       TTYD_PASSWORD: ${TTYD_PASSWORD:-}
+            # What the web terminal starts (default: bash; see README "Shell-Auswahl")
+            TTYD_CMD: ${TTYD_CMD:-bash}
     ports:
       - "8833:8833"
     volumes:
