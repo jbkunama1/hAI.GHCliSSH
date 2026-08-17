@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hAI.GHCliSSH - Copilot CLI in your Browser</title>
+  <title>🚀 hAI.GHCliSSH - Copilot CLI in your Browser</title>
   <meta name="description" content="GitHub Copilot CLI in a browser-based terminal (ttyd) - one docker run away.">
   <style>
     :root { color-scheme: light dark; }
@@ -27,7 +27,7 @@
   </style>
 </head>
 <body>
-  <h1>hAI.GHCliSSH</h1>
+  <h1>🚀 hAI.GHCliSSH</h1>
   <p>GitHub Copilot CLI in a browser-based terminal (<code>ttyd</code>) &mdash; one <code>docker run</code> away.
   No separate SSH server needed, no local install required.</p>
 
@@ -40,10 +40,10 @@
 
   <img alt="Space Shooter" src="game.gif" style="max-width:100%; border-radius:6px; margin:0.5rem 0;">
 
-  <h2>Overview</h2>
+  <h2>📖 Overview</h2>
   <p>This project provides a single Docker container that publishes a browser-based terminal (via <code>ttyd</code>) and has GitHub Copilot CLI pre-installed. Start the container, open <code>http://&lt;host&gt;:8833</code> in a browser and work directly with <code>copilot</code> and other commands &mdash; just like an SSH session, but without a separate SSH server.</p>
 
-  <h3>Architecture</h3>
+  <h3>🏗️ Architecture</h3>
   <table>
     <tr><th>Layer</th><th>Description</th></tr>
     <tr><td>Base image</td><td><code>tsl0922/ttyd:latest</code> &mdash; ships <code>ttyd</code> and all terminal-over-HTTP plumbing</td></tr>
@@ -52,19 +52,19 @@
     <tr><td>Workspace</td><td><code>/workspace</code> &mdash; working directory inside the container</td></tr>
   </table>
 
-  <h2>Install</h2>
+  <h2>🛠️ Install</h2>
   <pre>git clone https://github.com/jbkunama1/hAI.GHCliSSH.git
 cd hAI.GHCliSSH
 docker build -t copilot-ttyd .</pre>
 
-  <h2>Run</h2>
+  <h2>🚀 Run</h2>
   <pre>docker run --rm -it \
   -p 8833:8833 \
   --name copilot-ttyd \
   copilot-ttyd</pre>
   <blockquote><strong>Tip:</strong> To persist your work, add <code>-v copilot-workspace:/workspace</code>. To retain Copilot credentials, add <code>-v copilot-config:/home/copilot/.copilot</code>.</blockquote>
 
-  <h2>Pre-built GHCR image</h2>
+  <h2>📦 Pre-built GHCR image</h2>
   <p>A pre-built image is published to GitHub Container Registry for every push to <code>main</code>:</p>
   <pre>ghcr.io/jbkunama1/hai.ghclissh:main</pre>
   <blockquote><strong>Note:</strong> The package is currently <strong>private</strong>. To pull it you must either make the package public on GitHub or authenticate your container runtime (see Deploy to Portainer).</blockquote>
@@ -73,7 +73,7 @@ docker build -t copilot-ttyd .</pre>
   <pre>echo $GITHUB_TOKEN | docker login ghcr.io -u jbkunama1 --password-stdin</pre>
   <p>where <code>GITHUB_TOKEN</code> is a PAT with the <code>read:packages</code> scope.</p>
 
-  <h2>Docker Compose</h2>
+  <h2>🐳 Docker Compose</h2>
   <p>The standard deployment uses <a href="docker-compose.yml">docker-compose.yml</a>, which references the GHCR image:</p>
   <pre>services:
   copilot-terminal:
@@ -90,7 +90,7 @@ volumes:
   <pre>docker compose up -d</pre>
   <p>The <code>copilot-config</code> volume persists your Copilot authentication and configuration between restarts.</p>
 
-  <h2>Deploy to Portainer</h2>
+  <h2>⚓ Deploy to Portainer</h2>
   <ol>
     <li>In Portainer open <strong>Stacks</strong> &rarr; <strong>Add stack</strong>.</li>
     <li>Choose the <strong>Repository</strong> tab.</li>
@@ -111,22 +111,22 @@ volumes:
   <p>The stack serves on port <code>8833</code>, mounts the <code>copilot-config</code> volume for persistent Copilot configuration and attaches the container to the external Docker network <code>highfishNetwork</code> (must already exist in Portainer/Docker). After the first start, run <code>copilot login</code> once in the web terminal &mdash; the token stays in the volume.</p>
   <blockquote><strong>Private package:</strong> If the GHCR package is private, add a registry credential in Portainer first. Create a PAT with the <code>read:packages</code> scope, add it under Registries (GitHub Container Registry, user <code>jbkunama1</code>), and select it in the stack's registry dropdown before deploying.</blockquote>
 
-  <h2>Browser Access</h2>
+  <h2>🌐 Browser Access</h2>
   <p>Open <code>http://localhost:8833</code> (or <code>http://&lt;host-ip&gt;:8833</code> from another machine) to get a full TTY served over HTTP by <code>ttyd</code>.</p>
 
-  <h2>Using Copilot CLI</h2>
+  <h2>🤖 Using Copilot CLI</h2>
   <pre>copilot
 copilot -p "create a bash script that cleans up my git repo"</pre>
   <p>On first launch Copilot CLI asks whether you trust the current directory and prompts you to authenticate via the GitHub login flow.</p>
 
-  <h2>Security &amp; Networking</h2>
+  <h2>🛡️ Security &amp; Networking</h2>
   <ul>
     <li><strong>Do not expose port <code>8833</code> to the public internet</strong> without additional authentication. A reverse proxy with Basic Auth, OAuth or a VPN is strongly recommended &mdash; the terminal has full access to the container.</li>
     <li>For classroom or local test setups a LAN-only binding plus firewall rules is usually sufficient.</li>
     <li><strong>Persistence of authentication:</strong> mount a volume for the Copilot config directory (e.g., <code>-v copilot-config:/home/copilot/.copilot</code>). Note that without a system keychain, credentials may be stored in plaintext.</li>
   </ul>
 
-  <h2>License</h2>
+  <h2>📄 License</h2>
   <p>MIT</p>
 
   <hr>
