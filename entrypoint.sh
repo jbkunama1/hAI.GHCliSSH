@@ -1,15 +1,24 @@
 #!/bin/sh
 set -e
 
-# Copilot CLI authenticates automatically via env. Prefer the Copilot-specific
-# variable; fall back to the generic GITHUB_TOKEN that Portainer users often set.
+# Copilot CLI authenticates automatically via env -- no interactive `copilot login`
+# required. Prefer the Copilot-specific variable; fall back to the generic
+# GITHUB_TOKEN that Portainer users often set.
 : "${COPILOT_GITHUB_TOKEN:=${GITHUB_TOKEN:-}}"
 export COPILOT_GITHUB_TOKEN
 
-# MCP server + LLM provider settings (injected into the runtime shell for Copilot CLI)
+# MCP server config (injected into the runtime shell for Copilot CLI)
 MCP_SERVER="${MCP_SERVER:-AnythingMCP}"
-LLM_PROVIDER_API_KEY="${LLM_PROVIDER_API_KEY:-}"
-export MCP_SERVER LLM_PROVIDER_API_KEY
+MCP_SERVER_API_KEY="${MCP_SERVER_API_KEY:-}"
+export MCP_SERVER MCP_SERVER_API_KEY
+
+# BYOK LLM provider: map user-facing vars to the vars Copilot CLI understands.
+# Keep LLM_PROVIDER_API_KEY as a backward-compatible alias for OPENAI_API_KEY.
+: "${OPENAI_API_KEY:=${LLM_PROVIDER_API_KEY:-}}"
+COPILOT_PROVIDER_BASE_URL="${OPENAI_URL:-}"
+COPILOT_PROVIDER_API_KEY="${OPENAI_API_KEY:-}"
+COPILOT_MODEL="${COPILOT_MODEL:-}"
+export COPILOT_PROVIDER_BASE_URL COPILOT_PROVIDER_API_KEY COPILOT_MODEL
 
 # ttyd basic auth (empty password disables auth; empty user -> default "admin")
 TTYD_USER="${TTYD_USER:-admin}"
